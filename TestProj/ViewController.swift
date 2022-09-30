@@ -8,52 +8,77 @@
 import UIKit
 
 class ViewController: UIViewController {
-
-    @IBOutlet weak var sliderValueLabel: UILabel!
-    @IBOutlet weak var slider: UISlider!
-    @IBOutlet weak var greetingLabel: UILabel!
-    @IBOutlet weak var imageView: UIImageView!
+   
+    @IBOutlet weak var colorView: UIView!
     
-    @IBOutlet weak var squadColor: UIView!
+    
+    @IBOutlet weak var redLabel: UILabel!
+    @IBOutlet weak var greenLabel: UILabel!
+    @IBOutlet weak var blueLabel: UILabel!
+    
+    @IBOutlet weak var redSlider: UISlider!
+    @IBOutlet weak var greenSlider: UISlider!
+    @IBOutlet weak var blueSlider: UISlider!
+    
+    let maxColorValue: Float = 255
+    let minColorValue: Float = 0
+    var mediumColorValue: Float {
+        return (maxColorValue - minColorValue) / 2.0 + minColorValue
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        slider.minimumValue = 100
-        slider.maximumValue = 500
-        sliderValueLabel.text = " "
-        slider.value = (slider.maximumValue - slider.minimumValue) / 2 + slider.minimumValue
-        updateSliderValue()
-        greetingLabel.text = " "
-    }
-    @IBAction func showImageStateChanged(_ sender: UISwitch) {
-        imageView.isHidden = !sender.isOn
-    }
-    @IBAction func sliderValueChanged(_ sender: Any) {
-        sliderValueLabel.text = "\(Int(slider.value))"
-    }
-    @IBAction func greetingButton(_ sender: Any) {
-        greetingLabel.text = "Hello maaaan!"
+        updateAllSliderValue(mediumColorValue)
+        updateSlidersLabel()
+        updateColorView()
     }
     
-    func updateSliderValue() {
-        sliderValueLabel.text = "\(Int(slider.value))"
+    @IBAction func minPressed(_ sender: Any) {
+        updateAllSliderValue(minColorValue)
+        updateSlidersLabel()
+        updateColorView()
+        
+    }
+    @IBAction func mudiumPressed(_ sender: Any) {
+        updateAllSliderValue(mediumColorValue)
+        updateSlidersLabel()
+        updateColorView()
+        
+    }
+    @IBAction func maxPressed(_ sender: Any) {
+        updateAllSliderValue(maxColorValue)
+        updateSlidersLabel()
+        updateColorView()
     }
     
-    @IBAction func redButton(_ sender: Any) {
-        squadColor.backgroundColor = UIColor.red
+    @IBAction func redValueChanged(_ sender: Any) {
+        updateSlidersLabel()
+        updateColorView()
+    }
+    @IBAction func greenValueChanged(_ sender: Any) {
+        updateSlidersLabel()
+        updateColorView()
+    }
+    @IBAction func blueValueChanged(_ sender: Any) {
+        updateSlidersLabel()
+        updateColorView()
     }
     
-    @IBAction func greenButton(_ sender: Any) {
-        squadColor.backgroundColor = UIColor.green
+    func updateColorView() {
+        colorView.backgroundColor = UIColor(red: CGFloat(Int(redSlider.value)) / 255.0, green: CGFloat(Int(greenSlider.value)) / 255.0, blue: CGFloat(Int(blueSlider.value)) / 255.0, alpha: 1.0)
     }
     
-    @IBAction func blueButton(_ sender: Any) {
-        squadColor.backgroundColor = UIColor.blue
+    func updateSlidersLabel() {
+        redLabel.text = "\(redSlider.value)"
+        greenLabel.text = "\(greenSlider.value)"
+        blueLabel.text = "\(blueSlider.value)"
     }
     
-    @IBAction func resetButton(_ sender: Any) {
-        squadColor.backgroundColor = UIColor.darkGray
+    func updateAllSliderValue (_ value: Float) {
+        redSlider.value = value
+        greenSlider.value = value
+        blueSlider.value = value
     }
-    
+  
 }
 
